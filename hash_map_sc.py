@@ -55,43 +55,93 @@ class HashMap:
         """
         TODO: Write this implementation
         """
-        pass
+
+        if self.table_load() > 10:
+            self.resize_table(self._capacity * 2)
+        hash_key = self._hash_function(key) % self._capacity
+
+        if self._buckets[hash_key].contains(key):
+            self._buckets[hash_key].remove(key)
+            self._buckets[hash_key].insert(key, value)
+            return
+        else:
+            self._buckets[hash_key].insert(key, value)
+            self._size += 1
+
+        return
 
     def empty_buckets(self) -> int:
         """
         TODO: Write this implementation
         """
-        pass
+
+        count = 0
+        for bucket in range(self._capacity):
+            if self._buckets[bucket].length() == 0:
+                count += 1
+
+        return count
 
     def table_load(self) -> float:
         """
         TODO: Write this implementation
         """
-        pass
+        return self._size / self._capacity
 
     def clear(self) -> None:
         """
         TODO: Write this implementation
         """
-        pass
+        self._buckets = DynamicArray()
+        for _ in range(self._capacity):
+            self._buckets.append(LinkedList())
+
+        self._size = 0
 
     def resize_table(self, new_capacity: int) -> None:
         """
         TODO: Write this implementation
         """
-        pass
+
+        if new_capacity < 1:
+            return
+        else:
+            # Create new array with new capacity for buckets
+            new_buckets = DynamicArray()
+            for _ in range(new_capacity):
+                new_buckets.append(LinkedList())
+
+            # Rehash current buckets into new list
+            for index in range(self._buckets.length()):
+                for links in self._buckets[index]:
+                    new_hash = self._hash_function(links.key) % new_capacity
+                    new_buckets[new_hash].insert(links.key, links.value)
+
+            self._buckets = new_buckets
+            self._capacity = new_capacity
+            return
 
     def get(self, key: str) -> object:
         """
         TODO: Write this implementation
         """
-        pass
+
+        hash_key = self._hash_function(key) % self._capacity
+        if 0 > hash_key or hash_key > self._capacity:
+            return None
+        else:
+            return self._buckets[hash_key].contains(key).value
 
     def contains_key(self, key: str) -> bool:
         """
         TODO: Write this implementation
         """
-        pass
+        hash_key = self._hash_function(key) % self._capacity
+
+        if 0 <= hash_key < self._capacity:
+            return True
+        else:
+            return False
 
     def remove(self, key: str) -> None:
         """
@@ -304,8 +354,8 @@ if __name__ == "__main__":
     print("-----------------------------")
     da = DynamicArray(["apple", "apple", "grape", "melon", "melon", "peach"])
     map = HashMap(da.length() // 3, hash_function_1)
-    mode, frequency = find_mode(da)
-    print(f"Input: {da}\nMode: {mode}, Frequency: {frequency}")
+    # mode, frequency = find_mode(da)
+    # print(f"Input: {da}\nMode: {mode}, Frequency: {frequency}")
 
     print("\nPDF - find_mode example 2")
     print("-----------------------------")
@@ -315,8 +365,8 @@ if __name__ == "__main__":
         ["2", "4", "2", "6", "8", "4", "1", "3", "4", "5", "7", "3", "3", "2"]
     )
 
-    for case in test_cases:
-        da = DynamicArray(case)
-        map = HashMap(da.length() // 3, hash_function_2)
-        mode, frequency = find_mode(da)
-        print(f"Input: {da}\nMode: {mode}, Frequency: {frequency}\n")
+    # for case in test_cases:
+    #     da = DynamicArray(case)
+    #     map = HashMap(da.length() // 3, hash_function_2)
+    #     mode, frequency = find_mode(da)
+    #     print(f"Input: {da}\nMode: {mode}, Frequency: {frequency}\n")

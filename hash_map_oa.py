@@ -63,7 +63,7 @@ class HashMap:
         """
         TODO: Write this implementation
         """
-        pass
+        return self._size/self._capacity
 
     def empty_buckets(self) -> int:
         """
