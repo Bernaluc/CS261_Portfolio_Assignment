@@ -68,6 +68,7 @@ class HashMap:
             self._buckets[hash_key].insert(key, value)
             self._size += 1
 
+
         return
 
     def empty_buckets(self) -> int:
