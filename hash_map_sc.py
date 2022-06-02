@@ -113,7 +113,7 @@ class HashMap:
                 new_buckets.append(LinkedList())
 
             # Rehash current buckets into new list
-            for index in range(self._buckets.length() - 1):
+            for index in range(self._buckets.length()):
                 for links in self._buckets[index]:
                     new_hash = self._hash_function(links.key) % new_capacity
                     new_buckets[new_hash].insert(links.key, links.value)
