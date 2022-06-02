@@ -128,10 +128,15 @@ class HashMap:
         """
 
         hash_key = self._hash_function(key) % self._capacity
-        if 0 > hash_key or hash_key > self._capacity:
-            return None
-        else:
-            return self._buckets[hash_key].contains(key).value
+        value = self._buckets[hash_key].contains(key)
+
+        if value is not None:
+            return value.value
+
+        # if self._buckets[hash_key].contains(key):
+        #     return self._buckets[hash_key].
+        # else:
+        #     return self._buckets[hash_key].contains(key).value
 
     def contains_key(self, key: str) -> bool:
         """
@@ -151,7 +156,12 @@ class HashMap:
 
         hash_key = self._hash_function(key) % self._capacity
 
-        return self._buckets[hash_key].remove(key)
+        if self.contains_key(key):
+            self._buckets[hash_key].remove(key)
+            self._size -= 1
+            return
+        else:
+            return
 
     def get_keys(self) -> DynamicArray:
         """
@@ -283,94 +293,94 @@ if __name__ == "__main__":
             result &= not m.contains_key(str(key + 1))
         print(capacity, result, m.get_size(), m.get_capacity(), round(m.table_load(), 2))
 
-    # print("\nPDF - get example 1")
-    # print("-------------------")
-    # m = HashMap(30, hash_function_1)
-    # print(m.get('key'))
-    # m.put('key1', 10)
-    # print(m.get('key1'))
-    #
-    # print("\nPDF - get example 2")
-    # print("-------------------")
-    # m = HashMap(150, hash_function_2)
-    # for i in range(200, 300, 7):
-    #     m.put(str(i), i * 10)
-    # print(m.get_size(), m.get_capacity())
-    # for i in range(200, 300, 21):
-    #     print(i, m.get(str(i)), m.get(str(i)) == i * 10)
-    #     print(i + 1, m.get(str(i + 1)), m.get(str(i + 1)) == (i + 1) * 10)
-    #
-    # print("\nPDF - contains_key example 1")
-    # print("----------------------------")
-    # m = HashMap(10, hash_function_1)
-    # print(m.contains_key('key1'))
-    # m.put('key1', 10)
-    # m.put('key2', 20)
-    # m.put('key3', 30)
-    # print(m.contains_key('key1'))
-    # print(m.contains_key('key4'))
-    # print(m.contains_key('key2'))
-    # print(m.contains_key('key3'))
-    # m.remove('key3')
-    # print(m.contains_key('key3'))
-    #
-    # print("\nPDF - contains_key example 2")
-    # print("----------------------------")
-    # m = HashMap(75, hash_function_2)
-    # keys = [i for i in range(1, 1000, 20)]
-    # for key in keys:
-    #     m.put(str(key), key * 42)
-    # print(m.get_size(), m.get_capacity())
-    # result = True
-    # for key in keys:
-    #     # all inserted keys must be present
-    #     result &= m.contains_key(str(key))
-    #     # NOT inserted keys must be absent
-    #     result &= not m.contains_key(str(key + 1))
-    # print(result)
-    #
-    # print("\nPDF - remove example 1")
-    # print("----------------------")
-    # m = HashMap(50, hash_function_1)
-    # print(m.get('key1'))
-    # m.put('key1', 10)
-    # print(m.get('key1'))
-    # m.remove('key1')
-    # print(m.get('key1'))
-    # m.remove('key4')
-    #
-    # print("\nPDF - get_keys example 1")
-    # print("------------------------")
-    # m = HashMap(10, hash_function_2)
-    # for i in range(100, 200, 10):
-    #     m.put(str(i), str(i * 10))
-    # print(m.get_keys())
-    #
-    # m.resize_table(1)
-    # print(m.get_keys())
-    #
-    # m.put('200', '2000')
-    # m.remove('100')
-    # m.resize_table(2)
-    # print(m.get_keys())
-    #
-    # print("\nPDF - find_mode example 1")
-    # print("-----------------------------")
-    # da = DynamicArray(["apple", "apple", "grape", "melon", "melon", "peach"])
-    # map = HashMap(da.length() // 3, hash_function_1)
-    # # mode, frequency = find_mode(da)
-    # # print(f"Input: {da}\nMode: {mode}, Frequency: {frequency}")
-    #
-    # print("\nPDF - find_mode example 2")
-    # print("-----------------------------")
-    # test_cases = (
-    #     ["Arch", "Manjaro", "Manjaro", "Mint", "Mint", "Mint", "Ubuntu", "Ubuntu", "Ubuntu", "Ubuntu"],
-    #     ["one", "two", "three", "four", "five"],
-    #     ["2", "4", "2", "6", "8", "4", "1", "3", "4", "5", "7", "3", "3", "2"]
-    # )
-    #
-    # # for case in test_cases:
-    # #     da = DynamicArray(case)
-    # #     map = HashMap(da.length() // 3, hash_function_2)
-    # #     mode, frequency = find_mode(da)
-    # #     print(f"Input: {da}\nMode: {mode}, Frequency: {frequency}\n")
+    print("\nPDF - get example 1")
+    print("-------------------")
+    m = HashMap(30, hash_function_1)
+    print(m.get('key'))
+    m.put('key1', 10)
+    print(m.get('key1'))
+
+    print("\nPDF - get example 2")
+    print("-------------------")
+    m = HashMap(150, hash_function_2)
+    for i in range(200, 300, 7):
+        m.put(str(i), i * 10)
+    print(m.get_size(), m.get_capacity())
+    for i in range(200, 300, 21):
+        print(i, m.get(str(i)), m.get(str(i)) == i * 10)
+        print(i + 1, m.get(str(i + 1)), m.get(str(i + 1)) == (i + 1) * 10)
+
+    print("\nPDF - contains_key example 1")
+    print("----------------------------")
+    m = HashMap(10, hash_function_1)
+    print(m.contains_key('key1'))
+    m.put('key1', 10)
+    m.put('key2', 20)
+    m.put('key3', 30)
+    print(m.contains_key('key1'))
+    print(m.contains_key('key4'))
+    print(m.contains_key('key2'))
+    print(m.contains_key('key3'))
+    m.remove('key3')
+    print(m.contains_key('key3'))
+
+    print("\nPDF - contains_key example 2")
+    print("----------------------------")
+    m = HashMap(75, hash_function_2)
+    keys = [i for i in range(1, 1000, 20)]
+    for key in keys:
+        m.put(str(key), key * 42)
+    print(m.get_size(), m.get_capacity())
+    result = True
+    for key in keys:
+        # all inserted keys must be present
+        result &= m.contains_key(str(key))
+        # NOT inserted keys must be absent
+        result &= not m.contains_key(str(key + 1))
+    print(result)
+
+    print("\nPDF - remove example 1")
+    print("----------------------")
+    m = HashMap(50, hash_function_1)
+    print(m.get('key1'))
+    m.put('key1', 10)
+    print(m.get('key1'))
+    m.remove('key1')
+    print(m.get('key1'))
+    m.remove('key4')
+
+    print("\nPDF - get_keys example 1")
+    print("------------------------")
+    m = HashMap(10, hash_function_2)
+    for i in range(100, 200, 10):
+        m.put(str(i), str(i * 10))
+    print(m.get_keys())
+
+    m.resize_table(1)
+    print(m.get_keys())
+
+    m.put('200', '2000')
+    m.remove('100')
+    m.resize_table(2)
+    print(m.get_keys())
+
+    print("\nPDF - find_mode example 1")
+    print("-----------------------------")
+    da = DynamicArray(["apple", "apple", "grape", "melon", "melon", "peach"])
+    map = HashMap(da.length() // 3, hash_function_1)
+    # mode, frequency = find_mode(da)
+    # print(f"Input: {da}\nMode: {mode}, Frequency: {frequency}")
+
+    print("\nPDF - find_mode example 2")
+    print("-----------------------------")
+    test_cases = (
+        ["Arch", "Manjaro", "Manjaro", "Mint", "Mint", "Mint", "Ubuntu", "Ubuntu", "Ubuntu", "Ubuntu"],
+        ["one", "two", "three", "four", "five"],
+        ["2", "4", "2", "6", "8", "4", "1", "3", "4", "5", "7", "3", "3", "2"]
+    )
+
+    # for case in test_cases:
+    #     da = DynamicArray(case)
+    #     map = HashMap(da.length() // 3, hash_function_2)
+    #     mode, frequency = find_mode(da)
+    #     print(f"Input: {da}\nMode: {mode}, Frequency: {frequency}\n")
