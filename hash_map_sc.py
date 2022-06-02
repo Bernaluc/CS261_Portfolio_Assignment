@@ -68,7 +68,6 @@ class HashMap:
             self._buckets[hash_key].insert(key, value)
             self._size += 1
 
-
         return
 
     def empty_buckets(self) -> int:
@@ -167,7 +166,13 @@ class HashMap:
         """
         TODO: Write this implementation
         """
-        pass
+        keys = DynamicArray()
+
+        for index in range(self._buckets.length()):
+            for link in self._buckets[index]:
+                keys.append(link.key)
+
+        return keys
 
 
 def find_mode(da: DynamicArray) -> (DynamicArray, int):
