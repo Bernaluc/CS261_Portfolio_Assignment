@@ -148,7 +148,10 @@ class HashMap:
         """
         TODO: Write this implementation
         """
-        pass
+
+        hash_key = self._hash_function(key) % self._capacity
+
+        return self._buckets[hash_key].remove(key)
 
     def get_keys(self) -> DynamicArray:
         """
