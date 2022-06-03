@@ -168,6 +168,8 @@ class HashMap:
         for index in range(length):
             self._buckets.append(None)
 
+        self._size = 0
+
     def get_keys(self) -> DynamicArray:
         """
         TODO: Write this implementation
