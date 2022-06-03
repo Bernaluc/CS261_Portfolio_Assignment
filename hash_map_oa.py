@@ -57,56 +57,129 @@ class HashMap:
         """
         # remember, if the load factor is greater than or equal to 0.5,
         # resize the table before putting the new key/value pair
-        pass
+
+        if self.table_load() >= 0.5:
+            self.resize_table(self._capacity * 2)
+
+        hash_index = self._hash_function(key) % self._capacity
+        i = 1
+        new_index = hash_index
+
+        while self._buckets[new_index] and not self._buckets[new_index].is_tombstone:
+            if self._buckets[new_index].key == key:
+                self._buckets[new_index].value = value
+                return
+            else:
+                new_index = (hash_index + i ** 2) % self._capacity
+                i += 1
+
+        self._buckets[new_index] = HashEntry(key, value)
+        self._size += 1
 
     def table_load(self) -> float:
         """
         TODO: Write this implementation
         """
-        return self._size/self._capacity
+        return self._size / self._capacity
 
     def empty_buckets(self) -> int:
         """
         TODO: Write this implementation
         """
-        pass
+        return self._capacity - self._size
 
     def resize_table(self, new_capacity: int) -> None:
         """
         TODO: Write this implementation
         """
         # remember to rehash non-deleted entries into new table
-        pass
+        if new_capacity < 1 or new_capacity < self._size:
+            return
+
+        old_buckets = self._buckets
+        old_capacity = self._capacity
+
+        self._buckets = DynamicArray()
+
+        for _ in range(new_capacity):
+            self._buckets.append(None)
+
+        self._capacity = new_capacity
+        self._size = 0  # Have to make this zero or errors are caused
+
+        for index in range(old_capacity):
+            old_bucket = old_buckets[index]
+
+            if old_bucket:
+                self.put(old_bucket.key, old_bucket.value)
 
     def get(self, key: str) -> object:
         """
         TODO: Write this implementation
         """
-        pass
+
+        hash_index = self._hash_function(key) % self._capacity
+        new_index = hash_index
+        i = 0
+
+        while self._buckets[new_index]:
+            if self._buckets[new_index].key == key and not self._buckets[new_index].is_tombstone:
+                return self._buckets[new_index].value
+            else:
+                new_index = (hash_index + i ** 2) % self._capacity
+                i += 1
+        return None
 
     def contains_key(self, key: str) -> bool:
         """
-        TODO: Write this implementation
+
         """
-        pass
+
+        if self.get(key):
+            return True
+        else:
+            return False
 
     def remove(self, key: str) -> None:
         """
         TODO: Write this implementation
         """
-        pass
+        hash_index = self._hash_function(key) % self._capacity
+        new_index = hash_index
+        i = 0
+
+        while self._buckets[new_index]:
+            if self._buckets[new_index].key == key and not self._buckets[new_index].is_tombstone:
+                self._buckets[new_index].is_tombstone = True
+                self._size -= 1
+            else:
+                new_index = (hash_index + i ** 2) % self._capacity
+                i += 1
+        return None
 
     def clear(self) -> None:
         """
         TODO: Write this implementation
         """
-        pass
+        length = self._buckets.length()
+
+        self._buckets = DynamicArray()
+
+        for index in range(length):
+            self._buckets.append(None)
 
     def get_keys(self) -> DynamicArray:
         """
         TODO: Write this implementation
         """
-        pass
+
+        keys = DynamicArray()
+
+        for index in range(self._capacity):
+            if self._buckets[index] and not self._buckets[index].is_tombstone:
+                keys.append(self._buckets[index].key)
+
+        return keys
 
 
 # ------------------- BASIC TESTING ---------------------------------------- #

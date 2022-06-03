@@ -139,7 +139,7 @@ class HashMap:
 
     def contains_key(self, key: str) -> bool:
         """
-        TODO: Write this implementation
+
         """
         hash_key = self._hash_function(key) % self._capacity
 
@@ -150,7 +150,7 @@ class HashMap:
 
     def remove(self, key: str) -> None:
         """
-        TODO: Write this implementation
+
         """
 
         hash_key = self._hash_function(key) % self._capacity
@@ -164,7 +164,7 @@ class HashMap:
 
     def get_keys(self) -> DynamicArray:
         """
-        TODO: Write this implementation
+
         """
         keys = DynamicArray()
 
