@@ -1,9 +1,9 @@
 # Name:
-# OSU Email:
+# OSU Email: BernalUC@OregonState.edu
 # Course: CS261 - Data Structures
-# Assignment:
-# Due Date:
-# Description:
+# Assignment 6: Hashmaps
+# Due Date: 06/03/2022
+# Description: Implementation of a hash map using separate chaining
 
 
 from a6_include import (DynamicArray, LinkedList,
@@ -53,7 +53,12 @@ class HashMap:
 
     def put(self, key: str, value: object) -> None:
         """
-        TODO: Write this implementation
+
+        Hashes and inserts new value in to the hashmap
+
+        :param key:
+        :param value:
+        :return:
         """
 
         if self.table_load() > 10:
@@ -72,7 +77,9 @@ class HashMap:
 
     def empty_buckets(self) -> int:
         """
-        TODO: Write this implementation
+        Returns the number of empty buckets in hashmap
+
+        :return: int: Number of empty buckets
         """
 
         count = 0
@@ -84,13 +91,16 @@ class HashMap:
 
     def table_load(self) -> float:
         """
-        TODO: Write this implementation
+        Returns the current load of the hashmap
+
+        :return: float - load
         """
         return self._size / self._capacity
 
     def clear(self) -> None:
         """
-        TODO: Write this implementation
+
+        :return:
         """
         self._buckets = DynamicArray()
         for _ in range(self._capacity):
@@ -100,7 +110,10 @@ class HashMap:
 
     def resize_table(self, new_capacity: int) -> None:
         """
-        TODO: Write this implementation
+        Resizes the hashmap to specified capacity
+
+        :param new_capacity:
+        :return:
         """
 
         if new_capacity < 1:
@@ -123,7 +136,9 @@ class HashMap:
 
     def get(self, key: str) -> object:
         """
-        TODO: Write this implementation
+        Retrieves hash of specified key if it exists
+        :param key: hash key
+        :return: Hashed value
         """
 
         hash_key = self._hash_function(key) % self._capacity
@@ -139,7 +154,9 @@ class HashMap:
 
     def contains_key(self, key: str) -> bool:
         """
-
+        Returns true is key is found in hashtable, False otherwise
+        :param key: Key to search
+        :return: True if found, false otherwise
         """
         hash_key = self._hash_function(key) % self._capacity
 
@@ -150,9 +167,11 @@ class HashMap:
 
     def remove(self, key: str) -> None:
         """
+        Removes key:value from the table
 
+        :param key: key to remove from table if it exists
+        :return:
         """
-
         hash_key = self._hash_function(key) % self._capacity
 
         if self.contains_key(key):
@@ -164,7 +183,9 @@ class HashMap:
 
     def get_keys(self) -> DynamicArray:
         """
+        Returns array of keys found in hashmap
 
+        :return: DynamicArray: Keys
         """
         keys = DynamicArray()
 
@@ -177,11 +198,15 @@ class HashMap:
 
 def find_mode(da: DynamicArray) -> (DynamicArray, int):
     """
-    TODO: Write this implementation
+    Returns the mode of an array and the number of occurrences
+
+    :param da: Array of numbers
+    :return: (Mode(s), occurrences)
     """
     # if you'd like to use a hash map,
     # use this instance of your Separate Chaining HashMap
-    map = HashMap(da.length() // 3, hash_function_1)
+
+    return (None, None)
 
 
 # ------------------- BASIC TESTING ---------------------------------------- #
@@ -384,8 +409,8 @@ if __name__ == "__main__":
         ["2", "4", "2", "6", "8", "4", "1", "3", "4", "5", "7", "3", "3", "2"]
     )
 
-    # for case in test_cases:
-    #     da = DynamicArray(case)
-    #     map = HashMap(da.length() // 3, hash_function_2)
-    #     mode, frequency = find_mode(da)
-    #     print(f"Input: {da}\nMode: {mode}, Frequency: {frequency}\n")
+    for case in test_cases:
+        da = DynamicArray(case)
+        map = HashMap(da.length() // 3, hash_function_2)
+        mode, frequency = find_mode(da)
+        print(f"Input: {da}\nMode: {mode}, Frequency: {frequency}\n")

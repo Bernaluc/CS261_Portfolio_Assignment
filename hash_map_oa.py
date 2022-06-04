@@ -1,9 +1,9 @@
-# Name:
-# OSU Email:
+# Name: Carlos Bernal Urbina
+# OSU Email: BernalUC@OregonState.edu
 # Course: CS261 - Data Structures
-# Assignment:
-# Due Date:
-# Description:
+# Assignment 4: HashMaps
+# Due Date: 06/03/2022
+# Description: Implementation of hashmap using open addressing
 
 
 from a6_include import (DynamicArray, HashEntry,
@@ -53,7 +53,11 @@ class HashMap:
 
     def put(self, key: str, value: object) -> None:
         """
-        TODO: Write this implementation
+        inserts a key/value pair into the hashmap
+
+        :param key: Key
+        :param value: Value
+        :return: None
         """
         # remember, if the load factor is greater than or equal to 0.5,
         # resize the table before putting the new key/value pair
@@ -78,19 +82,26 @@ class HashMap:
 
     def table_load(self) -> float:
         """
-        TODO: Write this implementation
+        Returns the current load of a table.
+
+        :return: Load
         """
         return self._size / self._capacity
 
     def empty_buckets(self) -> int:
         """
-        TODO: Write this implementation
+        Returns current number of empty buckets in Hashmap
+
+        :return: # Empty buckets
         """
         return self._capacity - self._size
 
     def resize_table(self, new_capacity: int) -> None:
         """
-        TODO: Write this implementation
+        Resizes hashmap to specified capacity.
+
+        :param new_capacity: New Capacity
+        :return:
         """
         # remember to rehash non-deleted entries into new table
         if new_capacity < 1 or new_capacity < self._size:
@@ -115,7 +126,10 @@ class HashMap:
 
     def get(self, key: str) -> object:
         """
-        TODO: Write this implementation
+        returns the key/value associated with specified key if it exists.
+
+        :param key: key
+        :return: key/value
         """
 
         hash_index = self._hash_function(key) % self._capacity
@@ -132,7 +146,10 @@ class HashMap:
 
     def contains_key(self, key: str) -> bool:
         """
+        Returns true if a key exists in the hashmap
 
+        :param key:
+        :return:
         """
 
         if self.get(key):
@@ -142,7 +159,10 @@ class HashMap:
 
     def remove(self, key: str) -> None:
         """
-        TODO: Write this implementation
+        Removes the key/value pair if it corresponds to a specified key
+
+        :param key: Key
+        :return:
         """
         hash_index = self._hash_function(key) % self._capacity
         new_index = hash_index
@@ -159,7 +179,9 @@ class HashMap:
 
     def clear(self) -> None:
         """
-        TODO: Write this implementation
+        clears out the values in a hashmap without changing the capacity
+
+        :return:
         """
         length = self._buckets.length()
 
@@ -172,7 +194,9 @@ class HashMap:
 
     def get_keys(self) -> DynamicArray:
         """
-        TODO: Write this implementation
+        Returns all the keys found in the Hashmap
+
+        :return: Keys
         """
 
         keys = DynamicArray()
